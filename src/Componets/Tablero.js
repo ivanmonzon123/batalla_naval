@@ -32,11 +32,14 @@ function Tablero({table}) {
             <td>8</td>
             <td>9</td>
             <td>10</td>
+            {/* <td style={{backgroundColor:'red'}}>10</td> */}
         </tr>
         {matrix.map(fila =>(
            <tr className='Fila-Tablero'>
             <td>{String.fromCharCode(numero++)}</td>
-            {fila.map((column)=>(<td  className='Column-Tablero'>{column}</td>))}
+            {fila.map((column)=>(
+                <td  className='Column-Tablero'>{column}</td>
+              ))}
            </tr>
         ))}
        

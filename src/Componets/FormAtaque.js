@@ -1,30 +1,38 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { toMatrix } from "../Helpers/toMatrix";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase/FirebaseConf";
 
-function FormAtaque({ataque, impacto, user, enemy}) {
+function FormAtaque({ataque, impacto, user, enemy, controlButon}) {
   const [x, setx] = useState(-1);
   const [y, sety] = useState(-1);
   let myAtacks = toMatrix(ataque);
   let myImpact = toMatrix(impacto);
+  //console.log('aqui esta el bug',controlButon)
+  //if(controlButon === false){
+    useEffect(() => {
+      document.getElementById('buton').disabled = controlButon;
+      document.getElementById('buton').textContent  = 'Enviar'
+      console.log('entro aqui')
+     
+    }, [impacto]);
+    //console.log(document.getElementById('buton'))
+  //}
   // let x = -1
   // let y = -1
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log("El ataque papu :v", myAtacks);
-    console.log("Parece que le di :v", myImpact);
-    console.log('fila: ',x)
-    console.log('column: ',y)
-    myAtacks[x][y] = 'O'
+    
     if(myImpact[x][y] === '1'){
       myImpact[x][y] = 'X'
+      myAtacks[x][y] = 'K'
     }else{
       myImpact[x][y] = 'O'
+      myAtacks[x][y] = 'F'
     }
     await setDoc(doc(db, "Jugadores", user), {
       A: myAtacks[0],
@@ -50,20 +58,21 @@ function FormAtaque({ataque, impacto, user, enemy}) {
       I: myImpact[8],
       J: myImpact[9],
     });
-    console.log("El ataque papu :v", myAtacks);
-    console.log("Parece que le di :v", myImpact);
+  
+    document.getElementById('buton').disabled = true
+    document.getElementById('buton').textContent  = 'Esperando...'
   };
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3">
         <Form.Label>Coordenadas Filas: </Form.Label>
-        <Form.Control onChange={(e)=>(setx((e.target.value.charCodeAt(0))-65))} type="text" />
+        <Form.Control onChange={(e)=>(setx((e.target.value.charCodeAt(0))-65))} type="text" pattern="^[A-J]+$"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Coordenadas Columnas: </Form.Label>
-        <Form.Control onChange={(e)=>(sety((e.target.value)-1))} type="number" />
+        <Form.Control onChange={(e)=>(sety((e.target.value)-1))} type="number" min={1} max={10} />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" id="buton" >
         Enviar
       </Button>
     </Form>

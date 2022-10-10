@@ -10,7 +10,8 @@ function PageTableroA() {
   const [hisTable, sethisTable] = useState([]);
   const [myOcean, setmyOcean] = useState([]);
   const [myAtacks, setmyAtacks] = useState([]);
-  
+  const [controlButon, setcontrolButon] = useState(false);
+
 
   //const [bandera, setbandera] = useState(0);
   // let bandera = 0;
@@ -30,7 +31,8 @@ function PageTableroA() {
     const SuTabla = await getDoc(getHisAtaq);
     //console.log("Sus Ataques:", SuTabla.data());
     await sethisTable(SuTabla.data());
-    
+
+    setcontrolButon(false);
   };
 
   useEffect(() => {
@@ -38,10 +40,13 @@ function PageTableroA() {
       console.log("Current data: ", doc.data());
       getTablas();
     });
-    const nope = onSnapshot(doc(db, "Jugadores", "AtaquePrimerJugador"), (doc) => {
-      console.log("Current data: ", doc.data());
-      getTablas();
-    });
+    const nope = onSnapshot(
+      doc(db, "Jugadores", "AtaquePrimerJugador"),
+      (doc) => {
+        console.log("Current data: ", doc.data());
+        getTablas();
+      }
+    );
     return () => {
       nada();
     };
@@ -52,9 +57,15 @@ function PageTableroA() {
       className="w-100 d-flex justify-content-evenly align-items-center"
       style={{ height: "100vh" }}
     >
-      <Tablero table={myOcean} />
-      <Tablero table={myAtacks} />
-      <FormAtaque ataque={myAtacks} impacto={hisTable} user={'AtaquePrimerJugador'} enemy={'SegundoJugador'}/>
+      <Tablero table={myOcean} key={"tab1A"} />
+      <Tablero table={myAtacks} key={"tab1B"} />
+      <FormAtaque
+        ataque={myAtacks}
+        impacto={hisTable}
+        user={"AtaquePrimerJugador"}
+        enemy={"SegundoJugador"}
+        controlButon = {controlButon}
+      />
     </div>
   );
 }
