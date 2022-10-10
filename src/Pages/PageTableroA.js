@@ -38,6 +38,10 @@ function PageTableroA() {
       console.log("Current data: ", doc.data());
       getTablas();
     });
+    const nope = onSnapshot(doc(db, "Jugadores", "AtaquePrimerJugador"), (doc) => {
+      console.log("Current data: ", doc.data());
+      getTablas();
+    });
     return () => {
       nada();
     };
