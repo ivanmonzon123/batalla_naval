@@ -42,7 +42,7 @@ function Tablero({ table }) {
           <tr className="Fila-Tablero">
             <td>{String.fromCharCode(numero++)}</td>
             {fila.map((column) => {
-              if (column === "K" || column === "-") {
+              if (column === "K" || column === "-" || column === "X") {
                 return (
                   <td
                     style={{ backgroundColor: "red" }}
@@ -52,7 +52,19 @@ function Tablero({ table }) {
                   </td>
                 );
               } else {
-                return <td className="Column-Tablero">{column}</td>;
+                if (column === "1") {
+                  return (
+                    <td
+                      style={{ backgroundColor: "blue" }}
+                      className="Column-Tablero"
+                    >
+                      {column}
+                    </td>
+                  );
+                }else{
+                  return <td className="Column-Tablero">{column}</td>;
+                }
+                
               }
             })}
           </tr>

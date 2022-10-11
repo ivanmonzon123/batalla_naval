@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { toMatrix } from "../Helpers/toMatrix";
+import { changeForm } from "../Helpers/changeForm";
 import { useState,useEffect } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase/FirebaseConf";
@@ -10,57 +11,56 @@ function FormAtaque({ataque, impacto, user, enemy, controlButon}) {
   const [y, sety] = useState(-1);
   let myAtacks = toMatrix(ataque);
   let myImpact = toMatrix(impacto);
-  //console.log('aqui esta el bug',controlButon)
-  //if(controlButon === false){
+  
     useEffect(() => {
       document.getElementById('buton').disabled = controlButon;
       document.getElementById('buton').textContent  = 'Enviar'
-      console.log('entro aqui')
-     
+      // console.log('entro aqui')
     }, [impacto]);
-    //console.log(document.getElementById('buton'))
-  //}
-  // let x = -1
-  // let y = -1
+
+    const guardar = async ()=>{
+      await setDoc(doc(db, "Jugadores", user), {
+        A: myAtacks[0],
+        B: myAtacks[1],
+        C: myAtacks[2],
+        D: myAtacks[3],
+        E: myAtacks[4],
+        F: myAtacks[5],
+        G: myAtacks[6],
+        H: myAtacks[7],
+        I: myAtacks[8],
+        J: myAtacks[9],
+      });
+      await setDoc(doc(db, "Jugadores", enemy), {
+        A: myImpact[0],
+        B: myImpact[1],
+        C: myImpact[2],
+        D: myImpact[3],
+        E: myImpact[4],
+        F: myImpact[5],
+        G: myImpact[6],
+        H: myImpact[7],
+        I: myImpact[8],
+        J: myImpact[9],
+      });
+      document.getElementById('buton').disabled = true
+      document.getElementById('buton').textContent  = 'Esperando...'
+    }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    
     if(myImpact[x][y] === '1'){
       myImpact[x][y] = 'X'
       myAtacks[x][y] = 'K'
+      //myAtacks = changeForm(myAtacks);
+      guardar();
     }else{
-      myImpact[x][y] = 'O'
-      myAtacks[x][y] = 'F'
+      if(myImpact[x][y] === ' '){
+        myImpact[x][y] = 'O'
+        myAtacks[x][y] = 'F'
+        guardar();
+      }
     }
-    await setDoc(doc(db, "Jugadores", user), {
-      A: myAtacks[0],
-      B: myAtacks[1],
-      C: myAtacks[2],
-      D: myAtacks[3],
-      E: myAtacks[4],
-      F: myAtacks[5],
-      G: myAtacks[6],
-      H: myAtacks[7],
-      I: myAtacks[8],
-      J: myAtacks[9],
-    });
-    await setDoc(doc(db, "Jugadores", enemy), {
-      A: myImpact[0],
-      B: myImpact[1],
-      C: myImpact[2],
-      D: myImpact[3],
-      E: myImpact[4],
-      F: myImpact[5],
-      G: myImpact[6],
-      H: myImpact[7],
-      I: myImpact[8],
-      J: myImpact[9],
-    });
-  
-    document.getElementById('buton').disabled = true
-    document.getElementById('buton').textContent  = 'Esperando...'
   };
   return (
     <Form onSubmit={handleSubmit}>
