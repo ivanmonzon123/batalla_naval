@@ -52,7 +52,7 @@ function FormAtaque({ataque, impacto, user, enemy, controlButon}) {
     if(myImpact[x][y] === '1'){
       myImpact[x][y] = 'X'
       myAtacks[x][y] = 'K'
-      //myAtacks = changeForm(myAtacks);
+      //myImpact = changeForm(myImpact);
       guardar();
     }else{
       if(myImpact[x][y] === ' '){
