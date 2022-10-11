@@ -39,7 +39,7 @@ function InssertBarco({Obj,Name,Casillas}) {
         <option>Horizontal</option>
       </select>
       <h6>{Casillas} Casillas</h6>
-      <Button  className='text-center' variant="primary" type="submit" onClick={disableButton}>
+      <Button  className='text-center ms-3' variant="primary" type="submit" onClick={disableButton}>
         Enviar
       </Button>
     </Form>
