@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { toMatrix } from "../Helpers/toMatrix";
-import { changeForm } from "../Helpers/changeForm";
+// import { changeForm } from "../Helpers/changeForm";
 import { useState,useEffect } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Firebase/FirebaseConf";
@@ -66,11 +66,11 @@ function FormAtaque({ataque, impacto, user, enemy, controlButon}) {
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3">
         <Form.Label>Coordenadas Filas: </Form.Label>
-        <Form.Control onChange={(e)=>(setx((e.target.value.charCodeAt(0))-65))} type="text" pattern="^[A-J]+$"/>
+        <Form.Control onChange={(e)=>(setx((e.target.value.charCodeAt(0))-65))} type="text" pattern="^[A-J]+$" required/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Coordenadas Columnas: </Form.Label>
-        <Form.Control onChange={(e)=>(sety((e.target.value)-1))} type="number" min={1} max={10} />
+        <Form.Control onChange={(e)=>(sety((e.target.value)-1))} type="number" min={1} max={10} required/>
       </Form.Group>
       <Button variant="primary" type="submit" id="buton" >
         Enviar

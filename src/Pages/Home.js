@@ -22,13 +22,6 @@ export default function Home() {
     
   };
 
-  // useEffect(() => {
-  //   console.log('detro del useEfect')
-  //   return () => {
-  //     console.log('Desmontanme')
-  //   };
-  // }, []);
-
   return (
     <div
       className="w-100 d-flex justify-content-center align-items-center"

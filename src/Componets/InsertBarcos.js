@@ -8,12 +8,10 @@ function InssertBarco({Obj,Name,Casillas}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-    // setbarquito({ ...barquito, [e.target.name]: e.target.value });
     }
     const disableButton = (e)=>{
       console.log(barquito)
         if(barquito.pos!='' && barquito.x!=-1 && barquito.y!=-1){
-            // console.log(barquito);
             Obj.push(barquito);
            e.target.disabled = true
            
@@ -25,11 +23,11 @@ function InssertBarco({Obj,Name,Casillas}) {
         <h6 style={{width: '110px'}}>{Name} = </h6>
       <Form.Group className="d-flex align-items-center" controlId="">
         <Form.Label className="me-2 ms-3">X: </Form.Label>
-        <Form.Control name="x" onChange={(e)=>(barquito.x = parseInt(e.target.value)-1)} type="number" required />
+        <Form.Control name="x" onChange={(e)=>(barquito.x = parseInt(e.target.value)-1)} type="number" required min={1} max={10}/>
       </Form.Group>
       <Form.Group className="d-flex align-items-center" controlId="">
         <Form.Label className="me-2 ms-3">Y: </Form.Label>
-        <Form.Control name="y" onChange={(e)=>(barquito.y = parseInt(e.target.value)-1)} type="number" required />
+        <Form.Control name="y" onChange={(e)=>(barquito.y = parseInt(e.target.value)-1)} type="number" required min={1} max={10}/>
       </Form.Group>
       <select id="selector" name="pos" onClick={(e)=>(barquito.pos = e.target.value)} className="w-auto me-3 ms-3" required>
         <option disabled selected>
